@@ -1312,7 +1312,7 @@ int MIDI_PlaySong
       return( MIDI_NullMidiModule );
       }
 
-   if ( *( unsigned int * )song != LITTLE32(MIDI_HEADER_SIGNATURE) )
+   if ( memcmp( song, "MThd", 4 ) != 0 )
       {
       return( MIDI_InvalidMidiFile );
       }
@@ -1353,7 +1353,7 @@ int MIDI_PlaySong
    numtracks    = _MIDI_NumTracks;
    while( numtracks-- )
       {
-      if ( *( unsigned int * )ptr != LITTLE32(MIDI_TRACK_SIGNATURE) )
+      if ( memcmp( ptr, "MTrk", 4 ) != 0 )
          {
          free( _MIDI_TrackPtr );
 
