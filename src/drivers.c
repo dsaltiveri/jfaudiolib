@@ -31,6 +31,10 @@
 
 #include "driver_nosound.h"
 
+#ifdef __NDS__
+# include "driver_nds.h"
+#endif
+
 #ifdef HAVE_SDL
 # include "driver_sdl.h"
 #endif
@@ -274,6 +278,37 @@ static struct {
         SDLDrv_CD_IsPlaying,
         SDLDrv_CD_SetVolume,
         UNSUPPORTED_MIDI,
+    #else
+        UNSUPPORTED_COMPLETELY,
+    #endif
+    },
+
+    // Nintendo DS / DSi (BlocksDS)
+    {
+        "Nintendo DS",
+    #ifdef __NDS__
+        NdsSoundDrv_GetError,
+        NdsSoundDrv_ErrorString,
+        NdsSoundDrv_PCM_Init,
+        NdsSoundDrv_PCM_Shutdown,
+        NdsSoundDrv_PCM_BeginPlayback,
+        NdsSoundDrv_PCM_StopPlayback,
+        NdsSoundDrv_PCM_Lock,
+        NdsSoundDrv_PCM_Unlock,
+        NdsSoundDrv_CD_Init,
+        NdsSoundDrv_CD_Shutdown,
+        NdsSoundDrv_CD_Play,
+        NdsSoundDrv_CD_Stop,
+        NdsSoundDrv_CD_Pause,
+        NdsSoundDrv_CD_IsPlaying,
+        NdsSoundDrv_CD_SetVolume,
+        NdsSoundDrv_MIDI_Init,
+        NdsSoundDrv_MIDI_Shutdown,
+        NdsSoundDrv_MIDI_StartPlayback,
+        NdsSoundDrv_MIDI_HaltPlayback,
+        NdsSoundDrv_MIDI_SetTempo,
+        NdsSoundDrv_MIDI_Lock,
+        NdsSoundDrv_MIDI_Unlock,
     #else
         UNSUPPORTED_COMPLETELY,
     #endif
