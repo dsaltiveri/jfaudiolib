@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "drivers.h"
 #include "music.h"
 #include "midi.h"
-#include "ll_man.h"
 #include "asssys.h"
 #include "assmisc.h"
 
@@ -242,10 +241,10 @@ void MUSIC_SetVolume
    volume = max( 0, volume );
    volume = min( volume, 255 );
 
-   /*if ( MUSIC_SoundDevice != -1 )
+   if ( ASS_MIDISoundDriver != -1 )
       {
       MIDI_SetVolume( volume );
-      }*/
+      }
    }
 
 
@@ -294,10 +293,10 @@ int MUSIC_GetVolume
    )
 
    {
-   /*if ( MUSIC_SoundDevice == -1 )
+   if ( ASS_MIDISoundDriver == -1 )
       {
       return( 0 );
-      }*/
+      }
    return( MIDI_GetVolume() );
    }
 

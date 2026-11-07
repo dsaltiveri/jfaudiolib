@@ -226,13 +226,6 @@ typedef char HARSH_CLIP_TABLE_8[ MV_NumVoices * 256 ];
 #define MV_SetErrorCode( status ) \
    MV_ErrorCode   = ( status );
 
-#ifdef __NDS__
-#define ITCM_CODE __attribute__((section(".itcm"), long_call)) __attribute__((optimize("Ofast"))) __attribute__((hot)) __attribute__((target("arm")))
-#else
-#define ITCM_CODE
-#endif
-
-
 void MV_PlayVoice( VoiceNode *voice );
 
 VoiceNode *MV_AllocVoice( int priority );
@@ -246,62 +239,62 @@ void MV_ReleaseVorbisVoice( VoiceNode * voice );
 void ClearBuffer_DW( void *ptr, unsigned data, int length );
 
 void MV_Mix8BitMono( unsigned int position, unsigned int rate,
-   char *start, unsigned int length ) ITCM_CODE;
+   char *start, unsigned int length );
 
 void MV_Mix8BitStereo( unsigned int position,
-   unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+   unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitMono( unsigned int position,
-   unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+   unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitStereo( unsigned int position,
-   unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+   unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitMono16( unsigned int position,
-   unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+   unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix8BitMono16( unsigned int position, unsigned int rate,
-   char *start, unsigned int length ) ITCM_CODE;
+   char *start, unsigned int length );
 
 void MV_Mix8BitStereo16( unsigned int position,
-   unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+   unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitStereo16( unsigned int position,
-   unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+   unsigned int rate, char *start, unsigned int length );
 
-void MV_16BitReverb( char *src, char *dest, VOLUME16 *volume, int count ) ITCM_CODE;
+void MV_16BitReverb( char *src, char *dest, VOLUME16 *volume, unsigned int count );
 
-void MV_8BitReverb( signed char *src, signed char *dest, VOLUME16 *volume, int count ) ITCM_CODE;
+void MV_8BitReverb( signed char *src, signed char *dest, VOLUME16 *volume, unsigned int count );
 
-void MV_16BitReverbFast( char *src, char *dest, int count, int shift ) ITCM_CODE;
+void MV_16BitReverbFast( char *src, char *dest, unsigned int count, int shift );
 
-void MV_8BitReverbFast( signed char *src, signed char *dest, int count, int shift ) ITCM_CODE;
+void MV_8BitReverbFast( signed char *src, signed char *dest, unsigned int count, int shift );
 
 // implemented in mixst.c
-void ClearBuffer_DW( void *ptr, unsigned data, int length ) ITCM_CODE;
+void ClearBuffer_DW( void *ptr, unsigned data, int length );
 
 void MV_Mix8BitMono8Stereo( unsigned int position, unsigned int rate,
-							char *start, unsigned int length ) ITCM_CODE;
+							char *start, unsigned int length );
 
 void MV_Mix8BitStereo8Stereo( unsigned int position,
-							  unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+							  unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitMono8Stereo( unsigned int position,
-							 unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+							 unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitStereo8Stereo( unsigned int position,
-								unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+								unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitMono16Stereo( unsigned int position,
-								unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+								unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix8BitMono16Stereo( unsigned int position, unsigned int rate,
-							  char *start, unsigned int length ) ITCM_CODE;
+							  char *start, unsigned int length );
 
 void MV_Mix8BitStereo16Stereo( unsigned int position,
-								 unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+								 unsigned int rate, char *start, unsigned int length );
 
 void MV_Mix16BitStereo16Stereo( unsigned int position,
-								  unsigned int rate, char *start, unsigned int length ) ITCM_CODE;
+								  unsigned int rate, char *start, unsigned int length );
 
 #endif
