@@ -27,13 +27,8 @@
 
 //#define NO_COREAUDIO
 //#define NO_DIRECTSOUND
-//#define NO_XAUDIO2
 
 #include "driver_nosound.h"
-
-#ifdef __NDS__
-# include "driver_nds.h"
-#endif
 
 #ifdef HAVE_SDL
 # include "driver_sdl.h"
@@ -46,7 +41,6 @@
 #ifdef _WIN32
 # include "driver_directsound.h"
 # include "driver_winmm.h"
-# include "driver_xaudio2.h"
 #endif
 
 #ifdef HAVE_FLUIDSYNTH
@@ -55,6 +49,10 @@
 
 #ifdef HAVE_ALSA
 # include "driver_alsa.h"
+#endif
+
+#ifdef __NDS__
+# include "driver_nds.h"
 #endif
 
 int ASS_PCMSoundDriver = -1;
@@ -123,6 +121,39 @@ static struct {
         NoSoundDrv_MIDI_Unlock,
     },
 
+    // NDS Audio
+    {
+        "NDS Audio",
+    #if defined __NDS__
+        NdsSoundDrv_GetError,
+        NdsSoundDrv_ErrorString,
+        NdsSoundDrv_PCM_Init,
+        NdsSoundDrv_PCM_Shutdown,
+        NdsSoundDrv_PCM_BeginPlayback,
+        NdsSoundDrv_PCM_StopPlayback,
+        NdsSoundDrv_PCM_Lock,
+        NdsSoundDrv_PCM_Unlock,
+        UNSUPPORTED_CD,
+        UNSUPPORTED_MIDI,
+        /*NdsSoundDrv_CD_Init,
+        NdsSoundDrv_CD_Shutdown,
+        NdsSoundDrv_CD_Play,
+        NdsSoundDrv_CD_Stop,
+        NdsSoundDrv_CD_Pause,
+        NdsSoundDrv_CD_IsPlaying,
+        NdsSoundDrv_CD_SetVolume,
+        NdsSoundDrv_MIDI_Init,
+        NdsSoundDrv_MIDI_Shutdown,
+        NdsSoundDrv_MIDI_StartPlayback,
+        NdsSoundDrv_MIDI_HaltPlayback,
+        NdsSoundDrv_MIDI_SetTempo,
+        NdsSoundDrv_MIDI_Lock,
+        NdsSoundDrv_MIDI_Unlock*/
+    #else
+        UNSUPPORTED_COMPLETELY,
+    #endif
+    },
+
     // OS X CoreAudio
     {
         "Core Audio",
@@ -143,25 +174,6 @@ static struct {
         CoreAudioDrv_MIDI_SetTempo,
         CoreAudioDrv_MIDI_Lock,
         CoreAudioDrv_MIDI_Unlock,
-    #else
-        UNSUPPORTED_COMPLETELY,
-    #endif
-    },
-
-    // Windows XAudio2
-    {
-        "XAudio2",
-    #if defined _WIN32 && defined HAVE_XAUDIO2 && !defined NO_XAUDIO2
-        XAudio2Drv_GetError,
-        XAudio2Drv_ErrorString,
-        XAudio2Drv_PCM_Init,
-        XAudio2Drv_PCM_Shutdown,
-        XAudio2Drv_PCM_BeginPlayback,
-        XAudio2Drv_PCM_StopPlayback,
-        XAudio2Drv_PCM_Lock,
-        XAudio2Drv_PCM_Unlock,
-        UNSUPPORTED_CD,
-        UNSUPPORTED_MIDI,
     #else
         UNSUPPORTED_COMPLETELY,
     #endif
@@ -278,37 +290,6 @@ static struct {
         SDLDrv_CD_IsPlaying,
         SDLDrv_CD_SetVolume,
         UNSUPPORTED_MIDI,
-    #else
-        UNSUPPORTED_COMPLETELY,
-    #endif
-    },
-
-    // Nintendo DS / DSi (BlocksDS)
-    {
-        "Nintendo DS",
-    #ifdef __NDS__
-        NdsSoundDrv_GetError,
-        NdsSoundDrv_ErrorString,
-        NdsSoundDrv_PCM_Init,
-        NdsSoundDrv_PCM_Shutdown,
-        NdsSoundDrv_PCM_BeginPlayback,
-        NdsSoundDrv_PCM_StopPlayback,
-        NdsSoundDrv_PCM_Lock,
-        NdsSoundDrv_PCM_Unlock,
-        NdsSoundDrv_CD_Init,
-        NdsSoundDrv_CD_Shutdown,
-        NdsSoundDrv_CD_Play,
-        NdsSoundDrv_CD_Stop,
-        NdsSoundDrv_CD_Pause,
-        NdsSoundDrv_CD_IsPlaying,
-        NdsSoundDrv_CD_SetVolume,
-        NdsSoundDrv_MIDI_Init,
-        NdsSoundDrv_MIDI_Shutdown,
-        NdsSoundDrv_MIDI_StartPlayback,
-        NdsSoundDrv_MIDI_HaltPlayback,
-        NdsSoundDrv_MIDI_SetTempo,
-        NdsSoundDrv_MIDI_Lock,
-        NdsSoundDrv_MIDI_Unlock,
     #else
         UNSUPPORTED_COMPLETELY,
     #endif
